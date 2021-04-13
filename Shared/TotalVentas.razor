@@ -1,0 +1,39 @@
+﻿@using CRMInfo.Data
+@inject VentasTotalesService VentasTotalesService
+
+<DxChart Data="@SalesData"
+         LabelOverlap="ChartLabelOverlap.ShowAll"
+         CssClass="mw-1100">
+    <DxChartTitle Text="Total Ventas" />
+    <DxChartValueAxis>
+        <DxChartAxisLabel Format="ChartAxisLabelFormat.Currency"></DxChartAxisLabel>
+        <DxChartAxisTitle Text="Importe"></DxChartAxisTitle>
+    </DxChartValueAxis>
+    <DxChartLegend Position="RelativePosition.Outside" />
+
+    <DxChartCommonSeries AggregationMethod="Enumerable.Sum"
+                         NameField="@((VentasTotales s) => "Cliente " + s.Cliente)"
+                         ArgumentField="@((VentasTotales s) => s.Anyo)"
+                         ValueField="@((VentasTotales s) => s.Total)">
+        <SeriesTemplate Context="settings">
+            <DxChartBarSeries Settings="@settings">
+                <DxChartSeriesLabel Visible="true"></DxChartSeriesLabel>
+            </DxChartBarSeries>
+        </SeriesTemplate>
+    </DxChartCommonSeries>
+
+</DxChart>
+@code {
+
+    [Parameter]
+    public int Cliente { get; set; }
+
+    List<VentasTotales> SalesData;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        SalesData = await VentasTotalesService.GetVentasTotales(Cliente);
+    }
+
+}

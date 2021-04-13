@@ -1,0 +1,44 @@
+﻿@page "/"
+@inject NavigationManager NavManager
+
+<DxTabs>
+    <DxTabPage Text="Ventas Totales" TabIconCssClass="info">
+        <TotalVentas Cliente="@cliente"></TotalVentas>
+    </DxTabPage>
+    <DxTabPage Text="Ventas Series">
+        <TotalSeries></TotalSeries>
+    </DxTabPage>
+    <DxTabPage Text="Riesgo">
+        <Riesgo></Riesgo>
+    </DxTabPage>
+    <DxTabPage Text="Efectos">
+        <Efectos></Efectos>
+    </DxTabPage>
+    <DxTabPage Text="Pedidos">
+        <Pedidos></Pedidos>
+    </DxTabPage>
+    <DxTabPage Text="Especiales">
+        <Especiales></Especiales>
+    </DxTabPage>
+    <DxTabPage Text="No Conformidades">
+        <NoConformidades></NoConformidades>
+    </DxTabPage>
+
+
+
+
+</DxTabs>
+@code {
+    int cliente = 0;
+
+    protected override void OnInitialized()
+    {
+
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("cliente", out var _cliente))
+        {
+            cliente = Convert.ToInt32(_cliente);
+        }
+    }
+
+}
