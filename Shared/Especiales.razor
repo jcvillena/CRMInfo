@@ -1,5 +1,104 @@
-﻿<h3>Especiales</h3>
+﻿@using CRMInfo.Data
+@inject EspecialService EspecialService
+
+<DxDataGrid Data="@listaEspeciales">
+
+    <Columns>
+        <DxDataGridColumn Field=@nameof(Especial.Oferta) Width="80px" Caption="#">
+            <DisplayTemplate>
+                @{
+                    var keyField = (context as Especial).Oferta;
+                    <button id="ver" @onclick="@(() => { OnClick(keyField); })">Ver</button>
+                }
+            </DisplayTemplate>
+        </DxDataGridColumn>>
+        <DxDataGridColumn Field="@nameof(Especial.Oferta)" TextAlignment="DataGridTextAlign.Left" />
+        <DxDataGridDateEditColumn Field="@nameof(Especial.Fecha)" DisplayFormat="dd/MM/yyyy" EditorFormat="d" EditorDisplayFormat="D" />
+        <DxDataGridColumn Field="@nameof(Especial.SuPedido)" />
+        <DxDataGridColumn Field="@nameof(Especial.CreadoPor)" />
+
+        <DxDataGridColumn Field="@nameof(Especial.Estado)">
+            <DisplayTemplate>
+                @{
+
+                    var estado = (context as Especial).Codigo;
+                    @switch (estado)
+                    {
+                        case "0":
+                            <label class="text-success"><span>Inicial</span></label>
+                            break;
+
+                        case "1":
+                            <label class="text-success"><span>Pendiente presupuestar</span></label>
+                            break;
+                        case "2":
+                            <label class="text-success"><span>Presupuestado</span></label>
+                            break;
+                        case "3":
+                            <label class="text-danger"><span>No viable</span></label>
+                            break;
+                        case "4":
+                            <label class="text-danger"><span>Coumunicado no viable</span></label>
+                            break;
+                        case "5":
+                            <label class="text-danger"><span>Faltan Datos</span></label>
+                            break;
+                        case "6":
+                            <label class="text-danger"><span>Cancelada</span></label>
+                            break;
+                        case "7":
+                            <label class="text-success"><span>Enviado cliente</span></label>
+                            break;
+                        case "8":
+                            <label class="text-danger"><span>Rechazada</span></label>
+                            break;
+                        case "9":
+                            <label class="text-success"><span>Caducada</span></label>
+                            break;
+                        case "10":
+                            <label class="text-success"><span>Aceptada Cliente</span></label>
+                            break;
+                        case "11":
+                            <label class="text-success"><span>Informatizar</span></label>
+                            break;
+                        case "12":
+                            <label class="text-success"><span>Pend.Aprob.Planos</span></label>
+                            break;
+                        case "13":
+                            <label class="text-success"><span>Finalizada</span></label>
+                            break;
+
+                    }
+
+                }
+            </DisplayTemplate>
+
+        </DxDataGridColumn>
+        <DxDataGridSpinEditColumn Field="@nameof(Especial.Total)" DisplayFormat="c" />
+    </Columns>
+</DxDataGrid>
+<DxPopup HeaderText="Detalle Oferta" Visible="@popupVisible">
+    <div>Detalle de la oferta</div>
+</DxPopup>
 
 @code {
 
+    [Parameter]
+    public int Cliente { get; set; }
+
+    List<Especial> listaEspeciales;
+    bool popupVisible = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        listaEspeciales = await EspecialService.GetEspeciales(Cliente);
+    }
+    void OnClick(object id)
+    {
+        //your code
+        // Mostrar el opup cargando los datos
+        popupVisible = true;
+
+    }
 }
