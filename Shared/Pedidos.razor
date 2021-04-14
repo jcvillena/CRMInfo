@@ -1,5 +1,32 @@
 ﻿<h3>Pedidos</h3>
+@using System.Collections
+<DxDataGrid  Data="@weatherForecasts">
 
+</DxDataGrid>
 @code {
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string CloudCover { get; set; }
+        public bool Precipitation { get; set; }
+    }
+    static readonly Random random = new Random();
+    readonly List<WeatherForecast> weatherForecasts = new List<WeatherForecast>();
 
+    protected override void OnInitialized()
+    {
+        String[] CloudCover = { "Sunny", "Partly cloudy", "Cloudy", "Storm" };
+
+        foreach (var date in Enumerable.Range(1, 30).Select(i => DateTime.Now.Date.AddDays(i)))
+        {
+            weatherForecasts.Add(new WeatherForecast()
+            {
+                Date = date,
+                TemperatureC = random.Next(10, 20),
+                Precipitation = Convert.ToBoolean(random.Next(0, 2)),
+                CloudCover = CloudCover[random.Next(0, CloudCover.Length)]
+            });
+        }
+    }
 }

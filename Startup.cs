@@ -24,6 +24,7 @@ namespace CRMInfo
             services.AddServerSideBlazor();
             services.AddSingleton<JDEDataAccessLayer>();
             services.AddSingleton<VentasTotalesService>();
+            services.AddSingleton<EspecialService>();
 
             services.AddDevExpressBlazor();
         }

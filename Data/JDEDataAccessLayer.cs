@@ -13,6 +13,7 @@ namespace CRMInfo.Data
     {
         public IConfiguration Configuration;
         private const string JDE_DATABASE = "JDE";
+        private const string ESPECIALES_DATABASE = "ESPECIALES";
           public JDEDataAccessLayer(IConfiguration configuration)
         {
             Configuration = configuration; //Inject configuration to access Connection string from appsettings.json.
@@ -41,6 +42,25 @@ namespace CRMInfo.Data
                 return result.ToList();
             }
         }
+
+        public async Task<List<Especial>> GetEspeciales(double cliente)
+        {
+            using (IDbConnection db = new SqlConnection(Configuration.GetConnectionString(ESPECIALES_DATABASE)))
+            {
+                db.Open();
+
+                string SQL = "select SequentialNumber as Oferta, CreatedOn As Fecha, UserName As CreadoPor, SuPedido,Estado as Codigo, " + 
+                            "CHOOSE(Estado+1,'Inicial','Pendiente Presupuestar','Presupuestado','No viable','Comunicado no viable','Faltan datos','Cancelada','Enviado cliente', 'Rechazada','Caducada','Aceptada cliente', 'Informatizar','Pendiente ap.planos','Finalizada') as Estado," + 
+                             "Total " + 
+                             "from Oferta " +
+                             "LEFT JOIN PermissionPolicyUser on PermissionPolicyUser.Oid=CreatedBy " +
+                             "where Oferta.gcrecord is null " + 
+                             "order by Oferta.SequentialNumber Desc";
+                IEnumerable<Especial> result = await db.QueryAsync<Especial>(SQL);
+                return result.ToList();
+            }
+        }
+
 
 
 
