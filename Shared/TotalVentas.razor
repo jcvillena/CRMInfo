@@ -2,14 +2,15 @@
 @inject VentasTotalesService VentasTotalesService
 
 <DxChart Data="@SalesData"
-         LabelOverlap="ChartLabelOverlap.ShowAll"
+         LabelOverlap="ChartLabelOverlap.Stack"
+         Rotated="false"
          CssClass="mw-1100">
     <DxChartTitle Text="Total Ventas" />
     <DxChartValueAxis>
-        <DxChartAxisLabel Format="ChartAxisLabelFormat.Currency"></DxChartAxisLabel>
+        <DxChartAxisLabel Format="ChartAxisLabelFormat.Thousands"></DxChartAxisLabel>
         <DxChartAxisTitle Text="Importe"></DxChartAxisTitle>
     </DxChartValueAxis>
-    <DxChartLegend Position="RelativePosition.Outside" />
+    <DxChartLegend Position="RelativePosition.Outside" Visible="false" />
 
     <DxChartCommonSeries AggregationMethod="Enumerable.Sum"
                          NameField="@((VentasTotales s) => "Cliente " + s.Cliente)"
@@ -17,10 +18,22 @@
                          ValueField="@((VentasTotales s) => s.Total)">
         <SeriesTemplate Context="settings">
             <DxChartBarSeries Settings="@settings">
-                <DxChartSeriesLabel Visible="true"></DxChartSeriesLabel>
+                <DxChartSeriesLabel Visible="true">
+                    <DxChartSeriesLabelConnector Visible="true" Width="3" />
+                </DxChartSeriesLabel>
             </DxChartBarSeries>
+
         </SeriesTemplate>
+
+
     </DxChartCommonSeries>
+
+    <DxChartTooltip Enabled="true" Position="RelativePosition.Outside">
+        <div style="margin: 0.75rem">
+            <div>Año: @(context.Point.Argument)</div>
+            <div>Importe: @(context.Point.Value)</div>
+        </div>
+    </DxChartTooltip>
 
 </DxChart>
 @code {
