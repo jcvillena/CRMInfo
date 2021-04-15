@@ -49,12 +49,12 @@ namespace CRMInfo.Data
             {
                 db.Open();
 
-                string SQL = "select SequentialNumber as Oferta, CreatedOn As Fecha, UserName As CreadoPor, SuPedido,Estado as Codigo, " + 
+                string SQL = "select SequentialNumber as Oferta, CreatedOn As Fecha, FechaEnvio, UserName As CreadoPor, SuPedido,Estado as Codigo, " + 
                             "CHOOSE(Estado+1,'Inicial','Pendiente Presupuestar','Presupuestado','No viable','Comunicado no viable','Faltan datos','Cancelada','Enviado cliente', 'Rechazada','Caducada','Aceptada cliente', 'Informatizar','Pendiente ap.planos','Finalizada') as Estado," + 
                              "Total " + 
                              "from Oferta " +
                              "LEFT JOIN PermissionPolicyUser on PermissionPolicyUser.Oid=CreatedBy " +
-                             "where Oferta.gcrecord is null " + 
+                             "where Oferta.gcrecord is null and cliente=" + cliente.ToString() +  " " +
                              "order by Oferta.SequentialNumber Desc";
                 IEnumerable<Especial> result = await db.QueryAsync<Especial>(SQL);
                 return result.ToList();

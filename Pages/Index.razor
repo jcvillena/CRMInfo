@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
 
+<span>El referer es @Referer</span>
 <DxTabs>
     <DxTabPage Text="Ventas Totales" TabIconCssClass="info">
         <TotalVentas Cliente="@cliente"></TotalVentas>
@@ -18,7 +19,7 @@
         <Pedidos></Pedidos>
     </DxTabPage>
     <DxTabPage Text="Especiales">
-        <Especiales></Especiales>
+        <Especiales Cliente="@cliente"></Especiales>
     </DxTabPage>
     <DxTabPage Text="No Conformidades">
         <NoConformidades></NoConformidades>
@@ -29,12 +30,17 @@
 
 </DxTabs>
 @code {
+
+    [Parameter]
+    public string Referer { get; set; }
+
     int cliente = 0;
 
     protected override void OnInitialized()
     {
 
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+
         if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("cliente", out var _cliente))
         {
             cliente = Convert.ToInt32(_cliente);
