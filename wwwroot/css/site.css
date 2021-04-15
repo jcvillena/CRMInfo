@@ -158,3 +158,6 @@ app {
         font-size: inherit;
     }
 }
+.even-larger-badge {
+    font-size: 12px;
+}

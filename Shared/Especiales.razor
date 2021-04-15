@@ -8,12 +8,13 @@
             <DisplayTemplate>
                 @{
                     var keyField = (context as Especial).Oferta;
-                    <button id="ver" @onclick="@(() => { OnClick(keyField); })">Ver</button>
+                    <a class="btn btn-outline-success" id="ver" @onclick="@(() => { OnClick(keyField); })"><span class="oi oi-eye"></span></a>
                 }
             </DisplayTemplate>
         </DxDataGridColumn>>
         <DxDataGridColumn Field="@nameof(Especial.Oferta)" TextAlignment="DataGridTextAlign.Left" />
-        <DxDataGridDateEditColumn Field="@nameof(Especial.Fecha)" DisplayFormat="dd/MM/yyyy" EditorFormat="d" EditorDisplayFormat="D" />
+        <DxDataGridDateEditColumn Field="@nameof(Especial.Fecha)" DisplayFormat="dd/MM/yy" EditorFormat="d" EditorDisplayFormat="D" />
+        <DxDataGridDateEditColumn Field="@nameof(Especial.FechaEnvio)" DisplayFormat="dd/MM/yy hh:mm" EditorFormat="d" EditorDisplayFormat="D" />
         <DxDataGridColumn Field="@nameof(Especial.SuPedido)" />
         <DxDataGridColumn Field="@nameof(Especial.CreadoPor)" />
 
@@ -25,47 +26,47 @@
                     @switch (estado)
                     {
                         case "0":
-                            <label class="text-success"><span>Inicial</span></label>
+                            <span class="badge badge-info even-larger-badge">Inicial</span>
                             break;
 
                         case "1":
-                            <label class="text-success"><span>Pendiente presupuestar</span></label>
+                            <span class="badge badge-primary even-larger-badge">Pendiente presupuestar</span>
                             break;
                         case "2":
-                            <label class="text-success"><span>Presupuestado</span></label>
+                            <span class="badge badge-secondary even-larger-badge">Presupuestado</span>
                             break;
                         case "3":
-                            <label class="text-danger"><span>No viable</span></label>
+                            <span class="badge badge-danger even-larger-badge">No viable</span>
                             break;
                         case "4":
-                            <label class="text-danger"><span>Coumunicado no viable</span></label>
+                            <span class="badge badge-danger even-larger-badge">Comunicado no viable</span>
                             break;
                         case "5":
-                            <label class="text-danger"><span>Faltan Datos</span></label>
+                            <span class="badge badge-secondary even-larger-badge">Faltan datos</span>
                             break;
                         case "6":
-                            <label class="text-danger"><span>Cancelada</span></label>
+                            <span class="badge badge-danger even-larger-badge">Cancelada</span>
                             break;
                         case "7":
-                            <label class="text-success"><span>Enviado cliente</span></label>
+                            <span class="badge badge-warning even-larger-badge">Enviado cliente</span>
                             break;
                         case "8":
-                            <label class="text-danger"><span>Rechazada</span></label>
+                            <span class="badge badge-danger even-larger-badge">Rechazada</span>
                             break;
                         case "9":
-                            <label class="text-success"><span>Caducada</span></label>
+                            <span class="badge badge-secondary even-larger-badge">Caducada</span>
                             break;
                         case "10":
-                            <label class="text-success"><span>Aceptada Cliente</span></label>
+                            <span class="badge badge-success even-larger-badge">Aceptada cliente</span>
                             break;
                         case "11":
-                            <label class="text-success"><span>Informatizar</span></label>
+                            <span class="badge badge-success even-larger-badge">Informatizar</span>
                             break;
                         case "12":
-                            <label class="text-success"><span>Pend.Aprob.Planos</span></label>
+                            <span class="badge badge-success even-larger-badge">Pend.Aprobación planos</span>
                             break;
                         case "13":
-                            <label class="text-success"><span>Finalizada</span></label>
+                            <span class="badge badge-success even-larger-badge">Finalizada</span>
                             break;
 
                     }
@@ -79,6 +80,9 @@
 </DxDataGrid>
 <DxPopup HeaderText="Detalle Oferta" Visible="@popupVisible">
     <div>Detalle de la oferta</div>
+
+
+
 </DxPopup>
 
 @code {
@@ -96,8 +100,8 @@
     }
     void OnClick(object id)
     {
-        //your code
-        // Mostrar el opup cargando los datos
+  
+        // Mostrar el popup cargando los datos
         popupVisible = true;
 
     }

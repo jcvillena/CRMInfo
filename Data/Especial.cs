@@ -10,6 +10,7 @@ namespace CRMInfo.Data
 
         public string Oferta { get; set; }
         public DateTime Fecha { get; set; }
+        public DateTime FechaEnvio { get; set; }
         public string SuPedido { get; set; }
         public string CreadoPor { get; set; }
         public string Codigo { get; set; }
