@@ -7,6 +7,6 @@ namespace CRMInfo.Data
     {
         public double Cliente { get; set; }
         public int Anyo { get; set; }
-        public double Total { get; set; }
+        public decimal Total { get; set; }
     }
 }
