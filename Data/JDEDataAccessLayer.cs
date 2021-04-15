@@ -27,7 +27,9 @@ namespace CRMInfo.Data
 
                 string SQL = @"select cliente, anyo, sum(cant1 + cant2 + cant3 + cant4 + cant5 + cant6 + cant7 + cant8 + cant9 + cant10 + cant11 + cant12) as total from estadisticas_v where cliente=" + cliente.ToString() +  " group by anyo,cliente";
                 IEnumerable<VentasTotales> result = await db.QueryAsync<VentasTotales>(SQL);
+                
                 return result.ToList();
+                
             }
         }
 
